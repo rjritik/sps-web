@@ -4,7 +4,7 @@
  */
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUser, getCurrentUser } from '../../../services/authService';
+import { loginUser } from '../../../services/authService';
 
 /**
  * Login Thunk
@@ -27,37 +27,22 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await loginUser(credentials);
-      // Store token in localStorage for persistence
-      localStorage.setItem('token', response.token);
-      return response;
+
+      const { user, token } = response;
+      // Store auth data in localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem("isAuthenticated", "true");
+      
+      // Extract and store role names
+      if (user?.roles?.length > 0) {
+        const roleNames = user.roles.map(role => role.name);
+        localStorage.setItem("userRoles", JSON.stringify(roleNames));
+      }
+
+      return response; // Must include { user, token }
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Login failed');
     }
   }
 );
-
-/**
- * Fetch Current User Thunk
- * Retrieves the currently authenticated user's data
- * 
- * @type {AsyncThunk}
- * @param {void} _ - No parameters needed
- * 
- * On success:
- * - Returns current user's data
- * 
- * On failure:
- * - Returns error message through rejectWithValue
- * - Typically fails if token is invalid or expired
- */
-export const fetchCurrentUser = createAsyncThunk(
-  'auth/getCurrentUser',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getCurrentUser();
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Failed to fetch user data');
-    }
-  }
-); 

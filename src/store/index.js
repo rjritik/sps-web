@@ -5,7 +5,9 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import { authReducer } from './slices/auth';
-
+import { quarriesReducer } from './slices/quarries';
+import { trucksReducer } from './slices/trucks';
+import { inspectorReducer } from './slices/inspector';
 /**
  * Configure and create the Redux store
  */
@@ -18,6 +20,9 @@ export const store = configureStore({
    */
   reducer: {
     auth: authReducer,
+    quarries: quarriesReducer,
+    trucks: trucksReducer,
+    inspector: inspectorReducer,
   },
 
   /**

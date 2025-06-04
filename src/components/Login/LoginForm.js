@@ -3,49 +3,84 @@ import { Form, Input, Button, Checkbox } from "@heroui/react";
 import IconEyeOn from "../../utils/icons/IconEyeOn";
 import IconEyeOff from "../../utils/icons/IconEyeOff";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../store/slices/auth';
+import { useForm } from 'react-hook-form';
 
 const LoginForm = () => {
-    const [action, setAction] = useState(null);
     const [isVisible, setIsVisible] = useState(false);
-
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { isLoading, error } = useSelector((state) => state.auth);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
+            remember_me: false
+        }
+    });
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        let data = Object.fromEntries(new FormData(e.currentTarget));
+    const onSubmit = async (data) => {
+        try {
+            // Dispatch login action with credentials
+            const result = await dispatch(login({
+                email: data.email,
+                password: data.password
+            })).unwrap();
 
-        setAction(`submit ${JSON.stringify(data)}`);
-
-        navigate("/quarry");
+            // If login successful and we have user data
+            if (result?.user) {
+                // Navigate to quarry page
+                navigate("/quarry");
+            }
+        } catch (error) {
+            console.error("Login failed:", error);
+        }
     };
-
-    console.log("action = ", action);
 
     return (
         <Form
             className="text-left flex flex-col gap-5 w-full"
-            onReset={() => setAction("reset")}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit(onSubmit)}
         >
             <Input
+                {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Please enter a valid email"
+                    }
+                })}
                 isRequired
-                errorMessage="Please enter a valid email"
+                errorMessage={errors.email?.message}
+                isInvalid={!!errors.email}
                 label="Email"
                 labelPlacement="outside"
-                name="email"
                 placeholder="Enter email address"
                 type="email"
                 variant="bordered"
             />
 
             <Input
+                {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters"
+                    }
+                })}
                 isRequired
-                errorMessage="Wrong password"
+                errorMessage={errors.password?.message}
+                isInvalid={!!errors.password}
                 label="Password"
                 labelPlacement="outside"
-                name="password"
                 placeholder="*******"
                 type={isVisible ? "text" : "password"}
                 variant="bordered"
@@ -66,9 +101,7 @@ const LoginForm = () => {
             />
 
             <Checkbox
-                isRequired
-                name="remember_me"
-                type="checkbox"
+                {...register("remember_me")}
                 color="default"
                 classNames={{
                     label: "text-xs text-neutral-500",
@@ -77,9 +110,20 @@ const LoginForm = () => {
                 Remember me
             </Checkbox>
 
+            {error && (
+                <div className="text-red-500 text-sm text-center">
+                    {error}
+                </div>
+            )}
+
             <div className="w-full">
-                <Button type="submit" size="lg" className="btn-primary w-full">
-                    Login
+                <Button 
+                    type="submit" 
+                    size="lg" 
+                    className={`btn-primary w-full ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Logging in...' : 'Login'}
                 </Button>
             </div>
 
@@ -99,14 +143,6 @@ const LoginForm = () => {
                     Privacy Policy
                 </Link>
             </small>
-
-            {action && (
-                <>
-                    <div className="text-small text-default-500">
-                        Action: <code>{action}</code>
-                    </div>
-                </>
-            )}
         </Form>
     );
 };

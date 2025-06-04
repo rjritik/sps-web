@@ -4,7 +4,7 @@
  */
 
 import { createSlice } from '@reduxjs/toolkit';
-import { login, fetchCurrentUser } from './thunks';
+import { login } from './thunks';
 
 /**
  * Initial state for the auth slice
@@ -16,9 +16,10 @@ import { login, fetchCurrentUser } from './thunks';
  * @property {string|null} error - Any error messages from auth operations
  */
 const initialState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
   token: localStorage.getItem('token') || null,
-  isAuthenticated: false,
+  isAuthenticated: !!localStorage.getItem('token'),
+  userRoles: JSON.parse(localStorage.getItem('userRoles')) || [],
   isLoading: false,
   error: null,
 };
@@ -39,7 +40,15 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.error = null;
+
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('userRoles');
+      localStorage.setItem("isAuthenticated", "false");
+    },
+    clearError: (state) => {
+      state.error = null;
     },
     /**
      * Clear error action
@@ -67,21 +76,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
      
-      // Fetch current user action handlers
-      .addCase(fetchCurrentUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isAuthenticated = true;
-        state.user = action.payload;
-      })
-      .addCase(fetchCurrentUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-        state.isAuthenticated = false;
-      });
+    
   },
 });
 

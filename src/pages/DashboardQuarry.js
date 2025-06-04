@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../components/Sidebar/Sidebar";
 import ContentCard from "../components/Card/ContentCard";
-import { getTrucks } from "../store/slices/trucks/thunks";
+import { getQuarries } from "../store/slices/quarries/thunks";
 
-const DashboardSecurityCheck = () => {
+const DashboardQuarry = () => {
     const dispatch = useDispatch();
-    const { trucks, isLoading, error } = useSelector((state) => state.trucks);
+    const { quarries, isLoading, error } = useSelector((state) => state.quarries);
 
     useEffect(() => {
-        dispatch(getTrucks());
+        dispatch(getQuarries());
     }, [dispatch]);
 
     if (isLoading) {
@@ -18,7 +18,7 @@ const DashboardSecurityCheck = () => {
                 <Sidebar />
                 <main className="grow p-6">
                     <div className="flex items-center justify-center h-full">
-                        <p>Loading trucks...</p>
+                        <p>Loading quarries...</p>
                     </div>
                 </main>
             </div>
@@ -45,16 +45,16 @@ const DashboardSecurityCheck = () => {
             <main className="grow p-6">
                 <div className="mb-6">
                     <h4 className="text-gradient-brown font-bold">
-                        Security Check - Trucks
+                        On Going Quarries
                     </h4>
                 </div>
 
                 <div className="flex flex-wrap gap-6">
-                    {trucks.map((truck) => (
-                        <ContentCard
-                                key={truck.id}
-                            className="w-[calc(33.33%-1rem)]"
-                        />
+                    {quarries.map((quarry) => (
+                         <ContentCard
+                         key={quarry.id}
+                         className="w-[calc(33.33%-1rem)]"
+                     />
                     ))}
                 </div>
             </main>
@@ -62,4 +62,4 @@ const DashboardSecurityCheck = () => {
     );
 };
 
-export default DashboardSecurityCheck;
+export default DashboardQuarry;
