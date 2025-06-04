@@ -1,14 +1,16 @@
-import logo from "./logo.svg";
-import "./App.css";
+import "./style/style.scss";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navigation from "./components/Navigation/Navigation";
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <p>SPS WEB APP</p>
-                <p>Content goes here...</p>
-            </header>
-        </div>
+        <>
+            <BrowserRouter basename="/">
+                <Routes>
+                    <Route path="/*" element={<Navigation />} />
+                </Routes>
+            </BrowserRouter>
+        </>
     );
 }
 

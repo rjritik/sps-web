@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-white font-body text-base font-normal leading-normal cursor-default;
+}
+
+#root {
+    & > div[data-overlay-container="true"] {
+        @apply min-h-screen;
+    }
+}
+
+h1,
+.h1 {
+    @apply text-[2.8rem] leading-tight;
+}
+h3,
+.h3 {
+    @apply text-2xl leading-tight;
+}
+h4,
+.h4 {
+    @apply text-xl leading-tight;
+}
+
+.container {
+    @apply px-6 mx-auto w-full max-w-full;
+}
+
+.btn-primary {
+    @apply bg-gradient-brown text-white font-medium;
+}
