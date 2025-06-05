@@ -10,6 +10,7 @@ import IconGranite from "../../utils/icons/IconGranite";
 import IconArrow from "../../utils/icons/IconArrow";
 import IconTruck from "../../utils/icons/IconTruck";
 import CardAddressModal from "./CardAddressModal";
+import { Link, useNavigate } from "react-router-dom";
 
 const ContentCard = ({
     className,
@@ -20,10 +21,8 @@ const ContentCard = ({
     image,
     truckNumber,
 }) => {
-    // console.log("location = ", location);
-    // console.log("truckNumber = ", truckNumber);
-
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const navigate = useNavigate();
 
     return (
         <>
@@ -62,19 +61,25 @@ const ContentCard = ({
                 )}
 
                 <CardFooter className="justify-between gap-3 p-4">
-                    <Button color="secondary" className="rounded-full">
+                    <Button
+                        color="secondary"
+                        className="rounded-full"
+                        onPress={onOpen}
+                    >
                         View {truckNumber ? "Block" : "Quarry"}
                     </Button>
                     {address && (
-                        <Button
-                            isIconOnly
-                            aria-label="Link"
-                            variant="bordered"
-                            className="-mr-3 border-none"
-                            onPress={onOpen}
-                        >
-                            <IconArrow />
-                        </Button>
+                        <>
+                            <Button
+                                isIconOnly
+                                aria-label="Link"
+                                variant="bordered"
+                                className="-mr-3 border-none"
+                                onPress={() => navigate("/quarry-details/abc")}
+                            >
+                                <IconArrow />
+                            </Button>
+                        </>
                     )}
                 </CardFooter>
             </Card>
