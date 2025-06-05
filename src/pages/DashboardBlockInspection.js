@@ -6,7 +6,11 @@ import { getBlockInspections } from "../store/slices/inspector/thunks";
 
 const DashboardBlockInspection = () => {
     const dispatch = useDispatch();
-    const { blockInspections, isLoading, error } = useSelector((state) => state.inspector);
+    const { blockInspections, isLoading, error } = useSelector(
+        (state) => state.inspector
+    );
+
+    console.log("blockInspections = ", blockInspections);
 
     useEffect(() => {
         dispatch(getBlockInspections());
@@ -52,9 +56,9 @@ const DashboardBlockInspection = () => {
                 <div className="flex flex-wrap gap-6">
                     {blockInspections.map((inspection) => (
                         <ContentCard
-                        key={inspection.id}
-                        className="w-[calc(33.33%-1rem)]"
-                    />
+                            key={inspection._id}
+                            className="w-[calc(50%-1rem)] xl:w-[calc(33.33%-1rem)]"
+                        />
                     ))}
                 </div>
             </main>

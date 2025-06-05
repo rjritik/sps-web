@@ -11,10 +11,16 @@ module.exports = {
             fontFamily: {
                 body: ["Inter", "sans-serif"],
             },
-            backgroundColor: {
+            colors: {
                 "brown-1": "#201309",
                 "brown-2": "#452D14",
-                "brown-light": "#FFF0E6",
+                "brown-light-1": "#FFF0E6",
+                "brown-light-2": "#F3DDC9",
+
+                "gray-1": "#6C7278",
+                "gray-2": "#3D4349",
+                "gray-3": "",
+                "gray-4": "#666666",
             },
             backgroundImage: {
                 "gradient-brown":
@@ -30,16 +36,10 @@ module.exports = {
             addUtilities({
                 ".text-gradient-brown": {
                     background:
-                        "-webkit-linear-gradient(top, #201309, #452D14)", // 👈 vertical gradient
+                        "-webkit-linear-gradient(top, #201309, #452D14)",
                     "-webkit-background-clip": "text",
                     "-webkit-text-fill-color": "transparent",
                 },
-                // ".text-gradient-2": {
-                //     background:
-                //         "-webkit-linear-gradient(left, #0057AA, #002344)", // 👈 horizontal gradient
-                //     "-webkit-background-clip": "text",
-                //     "-webkit-text-fill-color": "transparent",
-                // },
             });
         },
     ],

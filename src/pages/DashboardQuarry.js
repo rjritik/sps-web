@@ -6,7 +6,11 @@ import { getQuarries } from "../store/slices/quarries/thunks";
 
 const DashboardQuarry = () => {
     const dispatch = useDispatch();
-    const { quarries, isLoading, error } = useSelector((state) => state.quarries);
+    const { quarries, isLoading, error } = useSelector(
+        (state) => state.quarries
+    );
+
+    console.log("quarries = ", quarries);
 
     useEffect(() => {
         dispatch(getQuarries());
@@ -51,10 +55,15 @@ const DashboardQuarry = () => {
 
                 <div className="flex flex-wrap gap-6">
                     {quarries.map((quarry) => (
-                         <ContentCard
-                         key={quarry.id}
-                         className="w-[calc(33.33%-1rem)]"
-                     />
+                        <ContentCard
+                            key={quarry?._id}
+                            name={quarry?.name}
+                            quantity={quarry?.value}
+                            address={quarry?.address}
+                            location={quarry?.location}
+                            image={quarry?.imageUrl}
+                            className="w-[calc(50%-1rem)] xl:w-[calc(33.33%-1rem)]"
+                        />
                     ))}
                 </div>
             </main>

@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-    @apply bg-white font-body text-base font-normal leading-normal cursor-default;
+    @apply bg-white font-body text-base text-gray-2 font-normal leading-normal cursor-default;
 }
 
 #root {
@@ -18,6 +18,10 @@ h1,
 .h1 {
     @apply text-[2.8rem] leading-tight;
 }
+h2,
+.h2 {
+    @apply text-[1.75rem] leading-tight;
+}
 h3,
 .h3 {
     @apply text-2xl leading-tight;
@@ -26,6 +30,10 @@ h4,
 .h4 {
     @apply text-xl leading-tight;
 }
+h5,
+.h5 {
+    @apply text-lg leading-tight;
+}
 
 .container {
     @apply px-6 mx-auto w-full max-w-full;
@@ -33,4 +41,14 @@ h4,
 
 .btn-primary {
     @apply bg-gradient-brown text-white font-medium;
+}
+
+.text-foreground {
+    @apply text-gray-2;
+}
+.bg-primary {
+    @apply bg-gradient-brown text-white font-medium;
+}
+.bg-secondary {
+    @apply bg-brown-light-1 text-black font-medium border border-brown-light-2;
 }

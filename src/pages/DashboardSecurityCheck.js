@@ -8,6 +8,8 @@ const DashboardSecurityCheck = () => {
     const dispatch = useDispatch();
     const { trucks, isLoading, error } = useSelector((state) => state.trucks);
 
+    console.log("trucks = ", trucks);
+
     useEffect(() => {
         dispatch(getTrucks());
     }, [dispatch]);
@@ -52,8 +54,10 @@ const DashboardSecurityCheck = () => {
                 <div className="flex flex-wrap gap-6">
                     {trucks.map((truck) => (
                         <ContentCard
-                                key={truck.id}
-                            className="w-[calc(33.33%-1rem)]"
+                            key={truck._id}
+                            truckNumber={truck?.additionalDetails?.truckNumber}
+                            quantity={truck?.additionalDetails?.purchasingUnit}
+                            className="w-[calc(50%-1rem)] xl:w-[calc(33.33%-1rem)]"
                         />
                     ))}
                 </div>

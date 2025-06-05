@@ -1,38 +1,91 @@
-import { Card, CardBody, CardFooter, CardHeader, Image } from "@heroui/react";
-import { Link } from "react-router-dom";
+import {
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    useDisclosure,
+} from "@heroui/react";
+import IconGranite from "../../utils/icons/IconGranite";
+import IconArrow from "../../utils/icons/IconArrow";
+import IconTruck from "../../utils/icons/IconTruck";
+import CardAddressModal from "./CardAddressModal";
 
-const ContentCard = ({ className }) => {
+const ContentCard = ({
+    className,
+    name,
+    quantity,
+    address,
+    location,
+    image,
+    truckNumber,
+}) => {
+    // console.log("location = ", location);
+    // console.log("truckNumber = ", truckNumber);
+
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
     return (
-        <Card className={`content-card ${className ? className : ""}`}>
-            <CardHeader className="flex gap-3">
-                <Image
-                    alt="heroui logo"
-                    height={40}
-                    radius="sm"
-                    src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-                    width={40}
-                />
-                <div className="flex flex-col">
-                    <p className="text-md">HeroUI</p>
-                    <p className="text-small text-default-500">heroui.com</p>
-                </div>
-            </CardHeader>
-            <CardBody>
-                <p>
-                    Make beautiful websites regardless of your design
-                    experience.
-                </p>
-            </CardBody>
-            <CardFooter>
-                <Link
-                    isExternal
-                    showAnchorIcon
-                    href="https://github.com/heroui-inc/heroui"
-                >
-                    Visit source code on GitHub.
-                </Link>
-            </CardFooter>
-        </Card>
+        <>
+            <Card
+                className={`content-card border border-neutral-200 shadow-sm ${
+                    className ? className : ""
+                }`}
+            >
+                <CardHeader className="flex gap-4 p-4">
+                    <div className="bg-brown-light-1 flex justify-center items-center gap-4 border border-brown-light-2 w-12 min-w-12 aspect-square rounded-full">
+                        {truckNumber ? <IconTruck /> : <IconGranite />}
+                    </div>
+                    <div className="flex flex-col">
+                        {name && (
+                            <h5 className="text-gray-2 font-semibold">
+                                {name}
+                            </h5>
+                        )}
+                        {truckNumber && (
+                            <h5 className="text-gray-2 font-semibold">
+                                Truck No
+                                <span className="text-gray-1 font-normal block">
+                                    {truckNumber}
+                                </span>
+                            </h5>
+                        )}
+                    </div>
+                </CardHeader>
+
+                {quantity && (
+                    <CardBody className="pl-20 pr-4 pt-0 pb-4 overflow-visible">
+                        <div className="text-3xl xl:text-4xl text-gray-4 font-medium">
+                            {quantity}
+                        </div>
+                    </CardBody>
+                )}
+
+                <CardFooter className="justify-between gap-3 p-4">
+                    <Button color="secondary" className="rounded-full">
+                        View {truckNumber ? "Block" : "Quarry"}
+                    </Button>
+                    {address && (
+                        <Button
+                            isIconOnly
+                            aria-label="Link"
+                            variant="bordered"
+                            className="-mr-3 border-none"
+                            onPress={onOpen}
+                        >
+                            <IconArrow />
+                        </Button>
+                    )}
+                </CardFooter>
+            </Card>
+
+            <CardAddressModal
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                address={address}
+                location={location}
+            />
+        </>
     );
 };
 
