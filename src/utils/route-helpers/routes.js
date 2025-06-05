@@ -2,6 +2,7 @@ import DashboardQuarry from "../../pages/DashboardQuarry";
 import DashboardSecurityCheck from "../../pages/DashboardSecurityCheck";
 import DashboardBlockInspection from "../../pages/DashboardBlockInspection";
 import DashboardQuarryDetails from "../../pages/DashboardQuarryDetails";
+import DashboardSecurityCheckDetails from "../../pages/DashboardSecurityCheckDetails";
 import Login from "../../pages/Login";
 
 export const routes = [
@@ -29,5 +30,10 @@ export const routes = [
         path: "/quarry-details/:id",
         component: DashboardQuarryDetails,
         allowedRoles: ["block_manager"],
+    },
+    {
+        path: "/security-check-details/:id",
+        component: DashboardSecurityCheckDetails,
+        allowedRoles: ["security_manager"],
     },
 ];

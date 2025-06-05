@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../components/Sidebar/Sidebar";
 import ContentCard from "../components/Card/ContentCard";
 import { getTrucks } from "../store/slices/trucks/thunks";
+import DashboardLayout from "../components/Dashboard/DashboardLayout";
 
 const DashboardSecurityCheck = () => {
     const dispatch = useDispatch();
@@ -14,37 +14,25 @@ const DashboardSecurityCheck = () => {
         dispatch(getTrucks());
     }, [dispatch]);
 
-    if (isLoading) {
+    const renderContent = () => {
+        if (isLoading) {
+            return (
+                <div className="flex items-center justify-center h-full">
+                    <p>Loading trucks...</p>
+                </div>
+            );
+        }
+
+        if (error) {
+            return (
+                <div className="flex items-center justify-center h-full">
+                    <p className="text-red-500">Error: {error}</p>
+                </div>
+            );
+        }
+
         return (
-            <div className="bg-neutral-100 flex min-h-screen">
-                <Sidebar />
-                <main className="grow p-6">
-                    <div className="flex items-center justify-center h-full">
-                        <p>Loading trucks...</p>
-                    </div>
-                </main>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="bg-neutral-100 flex min-h-screen">
-                <Sidebar />
-                <main className="grow p-6">
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-red-500">Error: {error}</p>
-                    </div>
-                </main>
-            </div>
-        );
-    }
-
-    return (
-        <div className="bg-neutral-100 flex min-h-screen">
-            <Sidebar />
-
-            <main className="grow p-6">
+            <>
                 <div className="mb-6">
                     <h4 className="text-gradient-brown font-bold">
                         Security Check - Trucks
@@ -55,15 +43,21 @@ const DashboardSecurityCheck = () => {
                     {trucks.map((truck) => (
                         <ContentCard
                             key={truck._id}
+                            truckId={truck?._id}
+                            invoiceNumber={
+                                truck?.additionalDetails?.invoiceNumber
+                            }
                             truckNumber={truck?.additionalDetails?.truckNumber}
                             quantity={truck?.additionalDetails?.purchasingUnit}
                             className="w-[calc(50%-1rem)] xl:w-[calc(33.33%-1rem)]"
                         />
                     ))}
                 </div>
-            </main>
-        </div>
-    );
+            </>
+        );
+    };
+
+    return <DashboardLayout>{renderContent()}</DashboardLayout>;
 };
 
 export default DashboardSecurityCheck;

@@ -34,6 +34,10 @@ h5,
 .h5 {
     @apply text-lg leading-tight;
 }
+h6,
+.h6 {
+    @apply text-base leading-tight;
+}
 
 .container {
     @apply px-6 mx-auto w-full max-w-full;

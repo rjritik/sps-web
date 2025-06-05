@@ -21,6 +21,7 @@ module.exports = {
                 "gray-2": "#3D4349",
                 "gray-3": "",
                 "gray-4": "#666666",
+                "gray-5": "#8D8C8A",
             },
             backgroundImage: {
                 "gradient-brown":

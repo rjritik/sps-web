@@ -10,7 +10,7 @@ import IconGranite from "../../utils/icons/IconGranite";
 import IconArrow from "../../utils/icons/IconArrow";
 import IconTruck from "../../utils/icons/IconTruck";
 import CardAddressModal from "./CardAddressModal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ContentCard = ({
     className,
@@ -18,7 +18,10 @@ const ContentCard = ({
     quantity,
     address,
     location,
+    refId,
     image,
+    truckId,
+    invoiceNumber,
     truckNumber,
 }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -64,7 +67,14 @@ const ContentCard = ({
                     <Button
                         color="secondary"
                         className="rounded-full"
-                        onPress={onOpen}
+                        onPress={
+                            truckNumber
+                                ? () =>
+                                      navigate(
+                                          `/security-check-details/${truckId}`
+                                      )
+                                : onOpen
+                        }
                     >
                         View {truckNumber ? "Block" : "Quarry"}
                     </Button>
@@ -75,7 +85,9 @@ const ContentCard = ({
                                 aria-label="Link"
                                 variant="bordered"
                                 className="-mr-3 border-none"
-                                onPress={() => navigate("/quarry-details/abc")}
+                                onPress={() =>
+                                    navigate(`/quarry-details/${refId}`)
+                                }
                             >
                                 <IconArrow />
                             </Button>
