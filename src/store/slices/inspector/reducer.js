@@ -3,8 +3,12 @@
  * Manages the state for block inspections and security checks in the Redux store
  */
 
-import { createSlice } from '@reduxjs/toolkit';
-import { getSecurityChecks, createBlockInspection, getBlockInspections } from './thunks';
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  getSecurityChecks,
+  createBlockInspection,
+  getBlockInspections,
+} from "./thunks";
 
 /**
  * Initial state for the inspector slice
@@ -28,7 +32,7 @@ const initialState = {
  * Handles state updates for block inspection-related actions
  */
 const inspectorSlice = createSlice({
-  name: 'inspector',
+  name: "inspector",
   initialState,
   reducers: {
     // Add any synchronous reducers here if needed
@@ -84,4 +88,4 @@ const inspectorSlice = createSlice({
 });
 
 export const { clearCurrentInspection } = inspectorSlice.actions;
-export default inspectorSlice.reducer; 
+export default inspectorSlice.reducer;

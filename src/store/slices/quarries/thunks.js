@@ -3,13 +3,16 @@
  * Async action creators for quarries-related operations
  */
 
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getQuarries as fetchQuarries } from '../../../services/quarriesService';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  getQuarries as fetchQuarries,
+  getQuarryByReferenceId as fetchQuarryByReferenceId,
+} from "../../../services/quarriesService";
 
 /**
  * Async thunk to fetch all quarries
  * Dispatches pending/fulfilled/rejected actions based on API response
- * 
+ *
  * @type {AsyncThunk}
  * @param {void} _ - No parameters needed
  * @param {Object} thunkAPI - Object containing Redux toolkit's utility functions
@@ -18,13 +21,40 @@ import { getQuarries as fetchQuarries } from '../../../services/quarriesService'
  * @throws {Error} Custom error message on failure
  */
 export const getQuarries = createAsyncThunk(
-  'quarries/getQuarries',
+  "quarries/getQuarries",
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetchQuarries();
       return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch quarries');
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch quarries"
+      );
     }
   }
-); 
+);
+
+/**
+ * Async thunk to fetch quarry details by reference ID
+ * Dispatches pending/fulfilled/rejected actions based on API response
+ *
+ * @type {AsyncThunk}
+ * @param {string} referenceId - The reference ID of the quarry
+ * @param {Object} thunkAPI - Object containing Redux toolkit's utility functions
+ * @param {Function} thunkAPI.rejectWithValue - Function to handle rejection with a custom value
+ * @returns {Promise<Object>} Quarry details object on success
+ * @throws {Error} Custom error message on failure
+ */
+export const getQuarryByReferenceId = createAsyncThunk(
+  "quarries/getQuarryByReferenceId",
+  async (referenceId, { rejectWithValue }) => {
+    try {
+      const response = await fetchQuarryByReferenceId(referenceId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch quarry details"
+      );
+    }
+  }
+);
