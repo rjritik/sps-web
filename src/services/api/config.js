@@ -42,6 +42,28 @@ export const createApiInstance = () => {
     return config;
   });
 
+   // ✅ Centralized error handling
+   api.interceptors.response.use(
+    (response) => response, // pass successful response
+    (error) => {
+      // Extract useful info
+      const customError = {
+        status: error.response?.status || 500,
+        message:
+          error.response?.data?.message ||
+          error.response?.data?.error ||
+          'Something went wrong. Please try again.',
+        original: error,
+      };
+
+      // Optional: Log to console or monitoring service
+      console.error('API Error:', customError);
+
+      // Throw the custom error object
+      return Promise.reject(customError);
+    }
+  );
+
   return api;
 };
 

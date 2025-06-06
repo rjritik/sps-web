@@ -6,38 +6,53 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/slices/auth';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const validationSchema = yup.object().shape({
+    email: yup
+        .string()
+        .required('Email is required')
+        .email('Please enter a valid email'),
+    password: yup
+        .string()
+        .required('Password is required'),
+    remember_me: yup.boolean()
+});
 
 const LoginForm = () => {
     const [isVisible, setIsVisible] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { isLoading, error } = useSelector((state) => state.auth);
+    const { isLoading, error: authError } = useSelector((state) => state.auth);
+
+    console.log(authError);
 
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors, touchedFields }
     } = useForm({
+        mode: 'onBlur',
+        reValidateMode: 'onBlur',
         defaultValues: {
             email: '',
             password: '',
             remember_me: false
-        }
+        },
+        resolver: yupResolver(validationSchema)
     });
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     const onSubmit = async (data) => {
         try {
-            // Dispatch login action with credentials
             const result = await dispatch(login({
                 email: data.email,
                 password: data.password
             })).unwrap();
 
-            // If login successful and we have user data
             if (result?.user) {
-                // Navigate to quarry page
                 navigate("/quarry");
             }
         } catch (error) {
@@ -49,41 +64,32 @@ const LoginForm = () => {
         <Form
             className="text-left flex flex-col gap-5 w-full"
             onSubmit={handleSubmit(onSubmit)}
+            noValidate
         >
             <Input
-                {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Please enter a valid email"
-                    }
-                })}
+                {...register("email")}
                 isRequired
-                errorMessage={errors.email?.message}
-                isInvalid={!!errors.email}
+                errorMessage={ errors.email?.message}
+                isInvalid={ !!errors.email}
                 label="Email"
                 labelPlacement="outside"
                 placeholder="Enter email address"
                 type="email"
                 variant="bordered"
+                className="w-full"
             />
 
             <Input
-                {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                        value: 6,
-                        message: "Password must be at least 6 characters"
-                    }
-                })}
+                {...register("password")}
                 isRequired
-                errorMessage={errors.password?.message}
-                isInvalid={!!errors.password}
+                errorMessage={ errors.password?.message}
+                isInvalid={ !!errors.password}
                 label="Password"
                 labelPlacement="outside"
                 placeholder="*******"
                 type={isVisible ? "text" : "password"}
                 variant="bordered"
+                className="w-full"
                 endContent={
                     <button
                         aria-label="toggle password visibility"
@@ -110,9 +116,9 @@ const LoginForm = () => {
                 Remember me
             </Checkbox>
 
-            {error && (
+            {authError && (
                 <div className="text-red-500 text-sm text-center">
-                    {error}
+                    {authError}
                 </div>
             )}
 
