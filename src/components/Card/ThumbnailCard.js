@@ -7,8 +7,10 @@ import {
   Link,
 } from "@heroui/react";
 import IconPremium from "../../utils/icons/IconPremium";
+import { useNavigate } from "react-router-dom";
 
 const ThumbnailCard = ({ className, data }) => {
+  const navigate = useNavigate();
   const {
     refNumber,
     type,
@@ -18,6 +20,7 @@ const ThumbnailCard = ({ className, data }) => {
     additionalDetails,
     dateTime,
     parentPage,
+    details
   } = data || {};
 
   const formatDimensions = () => {
@@ -124,7 +127,17 @@ const ThumbnailCard = ({ className, data }) => {
           {parentPage === "security-check" ||
           parentPage === "block-inspection" ? (
             <div className="content-center px-4 w-full">
-              <Link href="" size="sm" className="text-gray-1">
+              <Link href="" size="sm" className="text-gray-1" onPress={() => {
+               if(parentPage === "security-check"){
+                navigate(`/security-check/audit-details`, {
+                  state: { auditDetails: details },
+                });
+               }else{
+                // navigate(`/block-inspection/details`, {
+                //   state: { details },
+                // });
+               }
+              }}>
                 {parentPage === "security-check"
                   ? "Audit Block Details"
                   : "View Block Inspection"}
@@ -139,7 +152,13 @@ const ThumbnailCard = ({ className, data }) => {
               </div>
               <div className="bg-neutral-400 -ml-[1px] w-[1px]"></div>
               <div className="content-center px-4 w-1/2">
-                <Link href="" size="sm" className="text-gray-1">
+                <Link href="" size="sm" className="text-gray-1" onPress={() => {
+             
+                navigate(`/quarry/block-details`, {
+                  state: { blockDetails: details },
+                });
+              
+              }}>
                   View Block Details
                 </Link>
               </div>

@@ -66,7 +66,7 @@ const ContentCard = ({
             onPress={
               truckNumber
                 ? () =>
-                    navigate(`/security-check-details/${truckNumber}`, {
+                    navigate(`/security-check-details`, {
                       state: { truckDetails },
                     })
                 : onOpen

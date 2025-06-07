@@ -40,6 +40,7 @@ const DashboardSecurityCheckDetails = () => {
               additionalDetails: block?.additionalDetails,
               dateTime: block.dateTime,
               parentPage: "security-check",
+              details:block
             }}
           />
         ))}

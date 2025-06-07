@@ -4,6 +4,8 @@ import DashboardBlockInspection from "../../pages/DashboardBlockInspection";
 import DashboardQuarryDetails from "../../pages/DashboardQuarryDetails";
 import DashboardSecurityCheckDetails from "../../pages/DashboardSecurityCheckDetails";
 import Login from "../../pages/Login";
+import SecurityCheckAuditDetails from "../../pages/SecurityCheckAuditDetails";
+import QuarryBlockDetails from "../../pages/QuarryBlockDetails";
 
 export const routes = [
     {
@@ -27,13 +29,23 @@ export const routes = [
         allowedRoles: ["block_inspector"],
     },
     {
+        path: "/quarry/block-details",
+        component: QuarryBlockDetails,
+        allowedRoles: ["block_manager"],
+    },
+    {
         path: "/quarry-details/:id",
         component: DashboardQuarryDetails,
         allowedRoles: ["block_manager"],
     },
     {
-        path: "/security-check-details/:id",
+        path: "/security-check-details",
         component: DashboardSecurityCheckDetails,
+        allowedRoles: ["security_manager"],
+    },
+    {
+        path: "/security-check/audit-details",
+        component: SecurityCheckAuditDetails,
         allowedRoles: ["security_manager"],
     },
 ];

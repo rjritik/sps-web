@@ -4,6 +4,7 @@ import { useParams, useLocation } from "react-router-dom";
 import ThumbnailCard from "../components/Card/ThumbnailCard";
 import DashboardLayout from "../components/Dashboard/DashboardLayout";
 import { getQuarryByReferenceId } from "../store/slices/quarries/thunks";
+import { details } from "framer-motion/client";
 
 const DashboardQuarryDetails = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ const DashboardQuarryDetails = () => {
   // Get quarry name from navigation state
   const quarryName = location.state?.quarryName || "Quarry Details";
 
-  console.log("location.state = ", location.state);
 
   useEffect(() => {
     if (id) {
@@ -68,6 +68,7 @@ const DashboardQuarryDetails = () => {
               dimensions: block?.blockDimension,
               additionalDetails: block?.additionalDetails,
               dateTime: block?.dateTime,
+              details:block
             }}
           />
         ))}
