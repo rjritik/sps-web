@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ContentCard from "../components/Card/ContentCard";
 import { getQuarries } from "../store/slices/quarries/thunks";
 import DashboardLayout from "../components/Dashboard/DashboardLayout";
+import { Input } from "@heroui/react";
+import IconSearch from "../utils/icons/IconSearch";
 
 const DashboardQuarry = () => {
     const dispatch = useDispatch();
@@ -33,6 +35,22 @@ const DashboardQuarry = () => {
 
         return (
             <>
+                {/* top search bar */}
+                <div className="pb-6 mb-6 border-b-1 border-neutral-200">
+                    <Input
+                        isClearable
+                        placeholder="Search"
+                        startContent={<IconSearch size={18} />}
+                        type="search"
+                        variant="bordered"
+                        classNames={{
+                            base: "max-w-80 shadow-none",
+                            inputWrapper: "bg-white shadow-none",
+                            input: "text-ellipsis",
+                        }}
+                    />
+                </div>
+
                 <div className="mb-6">
                     <h4 className="text-gradient-brown font-bold">
                         On Going Quarries
