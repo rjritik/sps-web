@@ -12,7 +12,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { today, getLocalTimeZone,parseDate,CalendarDate } from "@internationalized/date";
+import {
+  today,
+  getLocalTimeZone,
+  parseDate,
+  CalendarDate,
+} from "@internationalized/date";
 import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import { useDispatch } from "react-redux";
 import { createSecurityCheck } from "../store/slices/trucks/thunks";
@@ -42,9 +47,9 @@ const SecurityCheckAuditDetails = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-        date: today(getLocalTimeZone()), // this is a CalendarDate
-        securityPersonnelName: "",
-      },
+      date: today(getLocalTimeZone()), // this is a CalendarDate
+      securityPersonnelName: "",
+    },
     resolver: yupResolver(schema),
   });
 
@@ -73,7 +78,9 @@ const SecurityCheckAuditDetails = () => {
         },
       };
 
-      const result = await dispatch(createSecurityCheck(securityCheckData)).unwrap();
+      const result = await dispatch(
+        createSecurityCheck(securityCheckData)
+      ).unwrap();
 
       if (result?.securityCheck) {
         onOpen(); // trigger modal after success
@@ -108,17 +115,17 @@ const SecurityCheckAuditDetails = () => {
           <div>
             <label className="block font-medium mb-2">Date</label>
             <Controller
-  name="date"
-  control={control}
-  render={({ field }) => (
-    <DatePicker
-      {...field}
-      value={field.value}
-      onChange={(val) => field.onChange(val)} // No .toDate()
-      className="w-full max-w-xs"
-    />
-  )}
-/>
+              name="date"
+              control={control}
+              render={({ field }) => (
+                <DatePicker
+                  {...field}
+                  value={field.value}
+                  onChange={(val) => field.onChange(val)} // No .toDate()
+                  className="w-full max-w-xs"
+                />
+              )}
+            />
             {errors.date && (
               <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>
             )}

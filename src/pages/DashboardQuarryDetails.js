@@ -10,7 +10,6 @@ import IconSearch from "../utils/icons/IconSearch";
 import Filter from "../components/Filter/Filter";
 import AddBlockRefModal from "../components/Modal/AddBloackRefModal";
 
-
 const breadcrumbItems = [
   { title: "On Going Quarries", link: "/quarry" },
   { title: "SCA Grey Granite", link: "" },
@@ -39,13 +38,13 @@ const DashboardQuarryDetails = () => {
 
   if (isLoading) {
     return (
-        <DashboardLayout>
-            <div className="flex items-center justify-center h-full">
-                <div className="text-gray-1">Loading...</div>
-            </div>
-        </DashboardLayout>
+      <DashboardLayout>
+        <div className="flex items-center justify-center h-full">
+          <div className="text-gray-1">Loading...</div>
+        </div>
+      </DashboardLayout>
     );
-}
+  }
   if (error) {
     return (
       <DashboardLayout>
@@ -58,72 +57,71 @@ const DashboardQuarryDetails = () => {
 
   return (
     <DashboardLayout>
-    <div className="bg-white px-6 py-4 -mx-6 -mt-6 mb-6">
+      <div className="bg-white px-6 py-4 -mx-6 -mt-6 mb-6">
         <Breadcrumb items={breadcrumbItems} />
-    </div>
+      </div>
 
-    <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
         <div className="flex flex-wrap items-center gap-4">
-            <h4 className="text-gradient-brown font-bold">
-                {quarryName}
-            </h4>
-            <div className="text-sm text-gray-1 font-medium">
-                Total {blockByQuarry?.length || 0} {quarryName}
-            </div>
+          <h4 className="text-gradient-brown font-bold">{quarryName}</h4>
+          <div className="text-sm text-gray-1 font-medium">
+            Total {blockByQuarry?.length || 0} {quarryName}
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-4">
-            {/* search input */}
-            <Input
-                isClearable
-                placeholder="Search Block Marker Reference No"
-                startContent={<IconSearch size={18} />}
-                type="search"
-                variant="bordered"
-                classNames={{
-                    base: "w-screen max-w-80 shadow-none",
-                    inputWrapper: "bg-white shadow-none",
-                    input: "text-ellipsis",
-                }}
-            />
+          {/* search input */}
+          <Input
+            isClearable
+            placeholder="Search Block Marker Reference No"
+            startContent={<IconSearch size={18} />}
+            type="search"
+            variant="bordered"
+            classNames={{
+              base: "w-screen max-w-80 shadow-none",
+              inputWrapper: "bg-white shadow-none",
+              input: "text-ellipsis",
+            }}
+          />
 
-            {/* filter */}
-            <Filter />
+          {/* filter */}
+          <Filter />
 
-            {/* button */}
-            <Button color="primary" onPress={()=>onOpen()}>Add New Block</Button>
+          {/* button */}
+          <Button color="primary" onPress={() => onOpen()}>
+            Add New Block
+          </Button>
         </div>
-    </div>
+      </div>
 
-    <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap gap-6">
         {blockByQuarry?.map((block) => (
-            <ThumbnailCard
-                key={block._id}
-                className="w-[calc(50%-1rem)] xl:w-[calc(33.33%-1rem)]"
-                data={{
-                    refNumber: block?.refNumber,
-                    type: block.type,
-                    color: block?.blockColor,
-                    qualityGrade: block?.blockQualityGrade,
-                    dimensions: block?.blockDimension,
-                    additionalDetails: block?.additionalDetails,
-                    dateTime: block?.dateTime,
-                    details: block,
-                }}
-            />
+          <ThumbnailCard
+            key={block._id}
+            className="w-[calc(50%-1rem)] xl:w-[calc(33.33%-1rem)]"
+            data={{
+              refNumber: block?.refNumber,
+              type: block.type,
+              color: block?.blockColor,
+              qualityGrade: block?.blockQualityGrade,
+              dimensions: block?.blockDimension,
+              additionalDetails: block?.additionalDetails,
+              dateTime: block?.dateTime,
+              details: block,
+            }}
+          />
         ))}
-    </div>
-    {isOpen && (
+      </div>
+      {isOpen && (
         <AddBlockRefModal
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
           title="Add New Block"
+          quarryRefId={id}
         />
       )}
-</DashboardLayout>
-
-     
+    </DashboardLayout>
   );
 };
 
