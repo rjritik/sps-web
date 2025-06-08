@@ -1,12 +1,19 @@
 import React from "react";
 import DashboardLayout from "../components/Dashboard/DashboardLayout";
-import { Card, CardBody, Image } from "@heroui/react";
+import { Button, Card, CardBody, Image } from "@heroui/react";
 import { useLocation } from "react-router-dom";
+import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
+import IconEdit from "../utils/icons/IconEdit";
+
+const breadcrumbItems = [
+    { title: "On Going Quarries", link: "/quarry" },
+    { title: "View Block Details", link: "" },
+];
 
 const QuarryBlockDetails = () => {
     const { blockDetails } = useLocation().state || {};
 
-    console.log({ blockDetails });
+    console.log("blockDetails = ", blockDetails);
 
     const {
         additionalDetails,
@@ -36,122 +43,126 @@ const QuarryBlockDetails = () => {
 
     return (
         <DashboardLayout>
-            <p className="font-semibold text-lg text-gray-800 mb-4">
-                View Block Details
-            </p>
+            <div className="bg-white px-6 py-4 -mx-6 -mt-6 mb-6">
+                <Breadcrumb items={breadcrumbItems} />
+            </div>
 
-            <div className="border border-orange-300 bg-orange-50 rounded-lg p-4 mb-6 flex flex-wrap justify-between items-center">
-                <p className="font-semibold text-sm text-gray-700">
-                    Block Marker Reference Number:
-                </p>
-                <span className="text-gradient-brown font-bold text-sm">
+            <div className="flex justify-between items-center gap-4 mb-6">
+                <h4 className="text-gradient-brown font-bold pl-5 relative before:content-[''] before:bg-gradient-brown before:w-2 before:h-full before:absolute before:left-0 before:top-0">
+                    View Block Details
+                </h4>
+                <Button color="primary">
+                    <IconEdit /> Edit
+                </Button>
+            </div>
+
+            <div className="bg-brown-light-1 flex flex-wrap justify-between items-center gap-2 p-4 mb-4 border border-brown-light-2 rounded-lg">
+                <div className="h5 text-gray-2 font-medium">
+                    Block Marker Reference Number
+                </div>
+                <div className="h5 text-gray-1 font-medium">
                     {refNumber || "N/A"}
-                </span>
+                </div>
             </div>
 
             {/* Block Information Card */}
-            <Card className="w-full mb-6">
-                <CardBody className="space-y-4">
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">Type</p>
-                        <p className="text-gray-800">
-                            {type === "g" ? "Granite" : "Marble"}
-                        </p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">
-                            Quality Grade
-                        </p>
-                        <p className="text-gray-800">{blockQualityGrade}</p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">LIWH</p>
-                        <p className="text-gray-800">
-                            {blockDimension?.blockLength} *{" "}
-                            {blockDimension?.blockWidth} *{" "}
-                            {blockDimension?.blockHeight}
-                        </p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">Weight</p>
-                        <p className="text-gray-800">
-                            {blockDimension?.blockWeight}
-                        </p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">Volume</p>
-                        <p className="text-gray-800">
-                            {blockDimension?.blockVolume}
-                        </p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">Block Color</p>
-                        <p className="text-gray-800">{blockColor}</p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">Date</p>
-                        <p className="text-gray-800">{formatDate(dateTime)}</p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">
-                            Purchase Unit
-                        </p>
-                        <p className="text-gray-800">
-                            {additionalDetails?.purchasingUnit || "N/A"}
-                        </p>
-                    </div>
-                    <div className="flex justify-between">
-                        <p className="font-medium text-gray-600">Wrapping</p>
-                        <p className="text-gray-800">
-                            {additionalDetails?.wrappingRequired ? "Yes" : "No"}
-                        </p>
-                    </div>
+            <Card className="mb-4 border border-neutral-200 w-full shadow-sm">
+                <CardBody className="gap-2 p-3">
+                    <table
+                        cellPadding="3"
+                        cellSpacing=""
+                        className="text-gray-1 border-0"
+                    >
+                        <tr>
+                            <td className="font-medium">Type</td>
+                            <td align="right">
+                                {type === "g" ? "Granite" : "Marble"}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">Quality Grade</td>
+                            <td align="right">{blockQualityGrade}</td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">LIWH</td>
+                            <td align="right">
+                                {blockDimension?.blockLength} *{" "}
+                                {blockDimension?.blockWidth} *{" "}
+                                {blockDimension?.blockHeight}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">Weight</td>
+                            <td align="right">{blockDimension?.blockWeight}</td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">Volume</td>
+                            <td align="right">{blockDimension?.blockVolume}</td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">Block Color</td>
+                            <td align="right">{blockColor}</td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">Date</td>
+                            <td align="right">{formatDate(dateTime)}</td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">Purchase Unit</td>
+                            <td align="right">
+                                {additionalDetails?.purchasingUnit || "N/A"}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="font-medium">Wrapping</td>
+                            <td align="right">
+                                {additionalDetails?.wrappingRequired
+                                    ? "Yes"
+                                    : "No"}
+                            </td>
+                        </tr>
+                    </table>
                 </CardBody>
             </Card>
 
             {/* Remarks Section */}
-            <Card className="w-full mb-6">
-                <CardBody>
-                    <label className="block font-medium text-gray-700 mb-1">
-                        Remarks
-                    </label>
-                    <p className="text-gray-600">
+            <Card className="mb-4 border border-neutral-200 w-full shadow-sm">
+                <CardBody className="p-4">
+                    <h6 className="text-primary font-semibold mb-4">Remarks</h6>
+                    <div className="p-4 border border-neutral-200 rounded-xl">
                         {additionalDetails?.remarks || "No remarks available"}
-                    </p>
+                    </div>
                 </CardBody>
             </Card>
 
             {/* Attachments Title */}
-            <div className="border border-orange-300 bg-orange-50 rounded-lg p-4 mb-4 flex justify-between items-center">
-                <p className="font-semibold text-sm text-gray-700">
-                    Attachments
-                </p>
+            <div className="bg-brown-light-1 flex flex-wrap justify-center items-center gap-2 p-4 mb-4 border border-brown-light-2 rounded-lg">
+                <div className="h5 text-gray-2 font-medium">Attachments</div>
             </div>
 
             {/* Images */}
-            <Card className="w-full mb-6">
-                <CardBody className="space-y-6">
-                    <p className="font-medium mb-2 text-gray-500">
+            <Card className="mb-0 border border-neutral-200 w-full shadow-sm">
+                <CardBody className="gap-4 p-4">
+                    <h6 className="text-primary font-semibold">
                         Block Pictures
-                    </p>
-                    <div className="space-y-4">
+                    </h6>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
                         {additionalDetails?.attachments?.length > 0 ? (
                             additionalDetails.attachments.map(
                                 (picture, index) => (
                                     <Image
                                         key={index}
-                                        alt="block pictures"
                                         src={getImageUrl(picture)}
+                                        alt="block pictures"
                                         width={750}
                                         height={562}
-                                        className="w-full h-auto aspect-video object-cover rounded-lg"
+                                        removeWrapper
+                                        className="w-full !h-auto aspect-video object-cover rounded-xl"
                                     />
                                 )
                             )
                         ) : (
-                            <p className="text-gray-500">
-                                No pictures available
-                            </p>
+                            <p>No pictures available</p>
                         )}
                     </div>
                 </CardBody>
@@ -161,167 +172,3 @@ const QuarryBlockDetails = () => {
 };
 
 export default QuarryBlockDetails;
-
-// import React from "react";
-// import DashboardLayout from "../components/Dashboard/DashboardLayout";
-// import { Card, CardBody, Image } from "@heroui/react";
-// import { useLocation } from "react-router-dom";
-
-// const QuarryBlockDetails = () => {
-//     const { blockDetails } = useLocation().state || {};
-
-//     console.log({ blockDetails });
-
-//     const {
-//         additionalDetails,
-//         blockColor,
-//         blockDimension,
-//         dateTime,
-//         refNumber,
-//         type,
-//         blockQualityGrade,
-//     } = blockDetails;
-
-//     const getImageUrl = (imgUrl) => {
-//         if (!imgUrl) return "/images/img-thumbnail.jpg";
-//         if (
-//             imgUrl.startsWith("file://") ||
-//             imgUrl.startsWith("https://example")
-//         ) {
-//             return "/images/img-thumbnail.jpg";
-//         }
-//         return imgUrl;
-//     };
-
-//     const formatDate = (dateString) => {
-//         if (!dateString) return "";
-//         return new Date(dateString).toLocaleDateString();
-//     };
-
-//     return (
-//         <DashboardLayout>
-//             <p className="font-semibold text-lg text-gray-800 mb-4">
-//                 View Block Details
-//             </p>
-
-//             <div className="border border-orange-300 bg-orange-50 rounded-lg p-4 mb-6 flex flex-wrap justify-between items-center">
-//                 <p className="font-semibold text-sm text-gray-700">
-//                     Block Marker Reference Number:
-//                 </p>
-//                 <span className="text-gradient-brown font-bold text-sm">
-//                     {refNumber || "N/A"}
-//                 </span>
-//             </div>
-
-//             {/* Block Information Card */}
-//             <Card className="w-full mb-6">
-//                 <CardBody className="space-y-4">
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">Type</p>
-//                         <p className="text-gray-800">
-//                             {type === "g" ? "Granite" : "Marble"}
-//                         </p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">
-//                             Quality Grade
-//                         </p>
-//                         <p className="text-gray-800">{blockQualityGrade}</p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">LIWH</p>
-//                         <p className="text-gray-800">
-//                             {blockDimension?.blockLength} *{" "}
-//                             {blockDimension?.blockWidth} *{" "}
-//                             {blockDimension?.blockHeight}
-//                         </p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">Weight</p>
-//                         <p className="text-gray-800">
-//                             {blockDimension?.blockWeight}
-//                         </p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">Volume</p>
-//                         <p className="text-gray-800">
-//                             {blockDimension?.blockVolume}
-//                         </p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">Block Color</p>
-//                         <p className="text-gray-800">{blockColor}</p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">Date</p>
-//                         <p className="text-gray-800">{formatDate(dateTime)}</p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">
-//                             Purchase Unit
-//                         </p>
-//                         <p className="text-gray-800">
-//                             {additionalDetails?.purchasingUnit || "N/A"}
-//                         </p>
-//                     </div>
-//                     <div className="flex justify-between">
-//                         <p className="font-medium text-gray-600">Wrapping</p>
-//                         <p className="text-gray-800">
-//                             {additionalDetails?.wrappingRequired ? "Yes" : "No"}
-//                         </p>
-//                     </div>
-//                 </CardBody>
-//             </Card>
-
-//             {/* Remarks Section */}
-//             <Card className="w-full mb-6">
-//                 <CardBody>
-//                     <label className="block font-medium text-gray-700 mb-1">
-//                         Remarks
-//                     </label>
-//                     <p className="text-gray-600">
-//                         {additionalDetails?.remarks || "No remarks available"}
-//                     </p>
-//                 </CardBody>
-//             </Card>
-
-//             {/* Attachments Title */}
-//             <div className="border border-orange-300 bg-orange-50 rounded-lg p-4 mb-4 flex justify-between items-center">
-//                 <p className="font-semibold text-sm text-gray-700">
-//                     Attachments
-//                 </p>
-//             </div>
-
-//             {/* Images */}
-//             <Card className="w-full mb-6">
-//                 <CardBody className="space-y-6">
-//                     <p className="font-medium mb-2 text-gray-500">
-//                         Block Pictures
-//                     </p>
-//                     <div className="space-y-4">
-//                         {additionalDetails?.attachments?.length > 0 ? (
-//                             additionalDetails.attachments.map(
-//                                 (picture, index) => (
-//                                     <Image
-//                                         key={index}
-//                                         alt="block pictures"
-//                                         src={getImageUrl(picture)}
-//                                         width={750}
-//                                         height={562}
-//                                         className="w-full h-auto aspect-video object-cover rounded-lg"
-//                                     />
-//                                 )
-//                             )
-//                         ) : (
-//                             <p className="text-gray-500">
-//                                 No pictures available
-//                             </p>
-//                         )}
-//                     </div>
-//                 </CardBody>
-//             </Card>
-//         </DashboardLayout>
-//     );
-// };
-
-// export default QuarryBlockDetails;

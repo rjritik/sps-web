@@ -63,3 +63,15 @@ h6,
 .bg-secondary {
     @apply bg-brown-light-1 text-black font-medium border border-brown-light-2;
 }
+
+// form
+
+.group {
+    &[data-slot="base"] {
+        // &[data-slot="label"] {}
+
+        [data-slot="input-wrapper"] {
+            @apply shadow-none;
+        }
+    }
+}
