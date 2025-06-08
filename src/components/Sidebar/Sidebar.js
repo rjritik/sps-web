@@ -51,18 +51,18 @@ const primaryMenu = [
         icon: "IconCalendar",
         notification: true,
     },
-    {
-        id: 4,
-        title: "Lorem 3",
-        link: "/lorem-3",
-        icon: "IconTruck",
-    },
-    {
-        id: 5,
-        title: "Lorem 4",
-        link: "/lorem-4",
-        icon: "IconStatistic",
-    },
+    // {
+    //     id: 4,
+    //     title: "Lorem 3",
+    //     link: "/lorem-3",
+    //     icon: "IconTruck",
+    // },
+    // {
+    //     id: 5,
+    //     title: "Lorem 4",
+    //     link: "/lorem-4",
+    //     icon: "IconStatistic",
+    // },
 ];
 
 const settingMenu = [

@@ -10,7 +10,6 @@ const DashboardSecurityCheckDetails = () => {
   const { truckNumber, additionalDetails, blockDimension, blocks } =
     truckDetails;
 
-  console.log("truckDetails = ", truckDetails);
 
   return (
     <DashboardLayout>

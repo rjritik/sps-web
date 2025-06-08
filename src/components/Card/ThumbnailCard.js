@@ -100,8 +100,8 @@ const ThumbnailCard = ({ className, data }) => {
             {type === "g" ? "Granite" : "Marble"}
           </h6>
           <div className="">
-            <span className="font-semibold block">BRN:- {refNumber}</span>
-            <span className="block">{formatDimensions()}</span>
+            <span className="font-semibold block">BRN:- {refNumber || 'N/A'}</span>
+            <span className="block">{formatDimensions() || 'Dimensions N/A'}</span>
             {/* <span className="block text-xs text-gray-500 mt-1">
               Date: {formatDate(dateTime)}
             </span> */}
