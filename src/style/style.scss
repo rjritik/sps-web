@@ -46,6 +46,13 @@ h6,
 .btn-primary {
     @apply bg-gradient-brown text-white font-medium;
 }
+.btn-bordered {
+    @apply text-brown-1 font-medium;
+
+    &.text-foreground {
+        @apply text-brown-1 font-medium;
+    }
+}
 
 .text-foreground {
     @apply text-gray-2;

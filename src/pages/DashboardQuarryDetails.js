@@ -4,18 +4,10 @@ import { useParams, useLocation } from "react-router-dom";
 import ThumbnailCard from "../components/Card/ThumbnailCard";
 import DashboardLayout from "../components/Dashboard/DashboardLayout";
 import { getQuarryByReferenceId } from "../store/slices/quarries/thunks";
-import { details } from "framer-motion/client";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-import {
-    Button,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Input,
-} from "@heroui/react";
+import { Button, Input } from "@heroui/react";
 import IconSearch from "../utils/icons/IconSearch";
-import IconFilter from "../utils/icons/IconFilter";
+import Filter from "../components/Filter/Filter";
 
 const breadcrumbItems = [
     { title: "On Going Quarries", link: "/quarry" },
@@ -91,30 +83,7 @@ const DashboardQuarryDetails = () => {
                     />
 
                     {/* filter */}
-                    <Dropdown placement="bottom-end">
-                        <DropdownTrigger>
-                            <Button
-                                // isIconOnly
-                                aria-label="Filter"
-                                color="default"
-                                variant="faded"
-                                className="bg-white text-gray-1"
-                            >
-                                <IconFilter className="w-6 min-w-6 h-auto" />{" "}
-                                Filter
-                            </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            // disallowEmptySelection
-                            aria-label="Filter"
-                            className="max-w-[300px]"
-                            // selectedKeys={selectedOption}
-                            // selectionMode="single"
-                            // onSelectionChange={setSelectedOption}
-                        >
-                            <DropdownItem>Filter content</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
+                    <Filter />
 
                     {/* button */}
                     <Button color="primary">Add New Block</Button>
@@ -135,7 +104,6 @@ const DashboardQuarryDetails = () => {
                             additionalDetails: block?.additionalDetails,
                             dateTime: block?.dateTime,
                             details: block,
-                            log: console.log("block = ", block),
                         }}
                     />
                 ))}
