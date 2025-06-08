@@ -6,6 +6,7 @@ import DashboardSecurityCheckDetails from "../../pages/DashboardSecurityCheckDet
 import Login from "../../pages/Login";
 import SecurityCheckAuditDetails from "../../pages/SecurityCheckAuditDetails";
 import QuarryBlockDetails from "../../pages/QuarryBlockDetails";
+import AddUpdateBlocks from "../../pages/AddUpdateBlocks";
 
 export const routes = [
     {
@@ -28,9 +29,14 @@ export const routes = [
         component: DashboardBlockInspection,
         allowedRoles: ["block_inspector"],
     },
-    {
+    { 
         path: "/quarry/block-details",
         component: QuarryBlockDetails,
+        allowedRoles: ["block_manager"],
+    },
+    { 
+        path: "/quarry/add-update-blocks",
+        component: AddUpdateBlocks,
         allowedRoles: ["block_manager"],
     },
     {
