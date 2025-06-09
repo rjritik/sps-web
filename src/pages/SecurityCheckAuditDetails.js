@@ -8,7 +8,7 @@ import {
     Input,
     Image,
 } from "@heroui/react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -243,9 +243,11 @@ const SecurityCheckAuditDetails = () => {
                         Truck Weight Documents
                     </div>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <Link
-                            to="#"
-                            className="bg-brown-light-1 flex justify-center items-center w-[3.125rem] aspect-square rounded-full pointer-events-none"
+                        <Button
+                            isIconOnly
+                            aria-label="Like"
+                            color="secondary"
+                            className="w-[3.125rem] h-auto aspect-square rounded-full"
                         >
                             <Image
                                 alt="icon pdf"
@@ -255,10 +257,12 @@ const SecurityCheckAuditDetails = () => {
                                 removeWrapper
                                 className="w-auto !h-auto max-h-6 rounded-none"
                             />
-                        </Link>
-                        <Link
-                            to="#"
-                            className="bg-brown-light-1 flex justify-center items-center w-[3.125rem] aspect-square rounded-full pointer-events-none"
+                        </Button>
+                        <Button
+                            isIconOnly
+                            aria-label="Like"
+                            color="secondary"
+                            className="w-[3.125rem] h-auto aspect-square rounded-full"
                         >
                             <Image
                                 alt="icon word"
@@ -268,7 +272,7 @@ const SecurityCheckAuditDetails = () => {
                                 removeWrapper
                                 className="w-auto !h-auto max-h-6 rounded-none"
                             />
-                        </Link>
+                        </Button>
                     </div>
                 </CardBody>
             </Card>
