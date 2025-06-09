@@ -77,7 +77,7 @@ const Login = () => {
                         ))}
                     </Slider>
                 </div>
-                <div className="content-center p-8 w-full md:w-1/2 lg:w-2/5">
+                <div className="bg-white content-center p-8 w-full md:w-1/2 lg:w-2/5 z-[1]">
                     <div className="text-center p-8 mx-auto border border-neutral-300 max-w-lg rounded-2xl shadow-md">
                         <Image
                             src="/images/logo-icon.svg"

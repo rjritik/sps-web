@@ -1,0 +1,17 @@
+.form-label {
+    @apply text-sm font-medium;
+    @apply text-gray-2 !important;
+}
+
+.group {
+    &[data-slot="base"] {
+        [data-slot="label"] {
+            @apply text-sm font-medium;
+            @apply text-gray-2 !important;
+        }
+
+        [data-slot="input-wrapper"] {
+            @apply shadow-none;
+        }
+    }
+}

@@ -8,7 +8,7 @@ import {
   Input,
   Image,
 } from "@heroui/react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -215,6 +215,46 @@ const SecurityCheckAuditDetails = () => {
               className="w-full"
               defaultValue={additionalDetails?.truckWeight || "100"}
             />
+          </div>
+        </CardBody>
+      </Card>
+      {/* Truck Weight Documents */}
+      <Card className="mb-4 border border-neutral-200 w-full shadow-sm">
+        <CardBody className="gap-4 p-4">
+          <div className="h5 text-gray-2 font-medium text-center">
+            Truck Weight Documents
+          </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button
+              isIconOnly
+              aria-label="Like"
+              color="secondary"
+              className="w-[3.125rem] h-auto aspect-square rounded-full"
+            >
+              <Image
+                alt="icon pdf"
+                src="/images/icon-pdf.svg"
+                width={18}
+                height={23}
+                removeWrapper
+                className="w-auto !h-auto max-h-6 rounded-none"
+              />
+            </Button>
+            <Button
+              isIconOnly
+              aria-label="Like"
+              color="secondary"
+              className="w-[3.125rem] h-auto aspect-square rounded-full"
+            >
+              <Image
+                alt="icon word"
+                src="/images/icon-word.png"
+                width={25}
+                height={23}
+                removeWrapper
+                className="w-auto !h-auto max-h-6 rounded-none"
+              />
+            </Button>
           </div>
         </CardBody>
       </Card>
