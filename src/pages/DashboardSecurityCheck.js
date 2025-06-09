@@ -44,25 +44,25 @@ const DashboardSecurityCheck = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-6">
-        <div className="flex flex-wrap justify-between items-center gap-4 pb-6 mb-6 border-b-1 border-neutral-200">
-          <h4 className="text-gradient-brown font-bold">Truck Details</h4>
+      <div className="pb-6 mb-6 border-b-1 border-neutral-200">
+        <Input
+          isClearable
+          placeholder="Search Truck Number"
+          startContent={<IconSearch size={18} />}
+          type="search"
+          variant="bordered"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          classNames={{
+            base: "max-w-80 shadow-none",
+            inputWrapper: "bg-white shadow-none",
+            input: "text-ellipsis",
+          }}
+        />
+      </div>
 
-          <Input
-            isClearable
-            placeholder="Search Truck Number"
-            startContent={<IconSearch size={18} />}
-            type="search"
-            variant="bordered"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            classNames={{
-              base: "max-w-80 shadow-none",
-              inputWrapper: "bg-white shadow-none",
-              input: "text-ellipsis",
-            }}
-          />
-        </div>
+      <div className="mb-6">
+        <h4 className="text-gradient-brown font-bold">Truck Details</h4>
       </div>
 
       <div className="flex flex-wrap gap-6">

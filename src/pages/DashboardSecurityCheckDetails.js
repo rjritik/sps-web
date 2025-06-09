@@ -19,21 +19,21 @@ const DashboardSecurityCheckDetails = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-6">
-        <div className="flex flex-wrap justify-between items-center gap-4">
-          <div className="flex items-center gap-4">
-            <h4 className="text-gradient-brown font-bold flex items-center gap-2">
-              <IconTruck /> Truck No:{" "}
-              <span className="text-gray-1 font-normal">{truckNumber}</span>
-            </h4>
-            <div className="text-sm text-gray-1 font-medium">
-              Total {blocks?.length || 0} Blocks
-            </div>
+      <div className="mb-6 flex flex-wrap items-center justify-between ">
+        <div className="flex items-center gap-4">
+          <h4 className="text-gradient-brown font-bold flex items-center gap-2">
+            <IconTruck /> Truck No:{" "}
+            <span className="text-gray-1 font-normal">{truckNumber}</span>
+          </h4>
+          <div className="text-sm text-gray-1 font-medium">
+            Total {blocks?.length || 0} Blocks
           </div>
+        </div>
 
+        <div>
           <Input
             isClearable
-            placeholder="Search Ref Number"
+            placeholder="Search Reference Number"
             startContent={<IconSearch size={18} />}
             type="search"
             variant="bordered"

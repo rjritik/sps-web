@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSecurityChecks } from "../store/slices/inspector/thunks";
 import DashboardLayout from "../components/Dashboard/DashboardLayout";
 import ThumbnailCard from "../components/Card/ThumbnailCard";
+import { Input } from "@heroui/react";
+import IconSearch from "../utils/icons/IconSearch";
+import Filter from "../components/Filter/Filter";
 
 const DashboardBlockInspection = () => {
   const dispatch = useDispatch();
@@ -10,9 +13,17 @@ const DashboardBlockInspection = () => {
     (state) => state.inspector
   );
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     dispatch(getSecurityChecks());
   }, [dispatch]);
+
+  const filteredChecks = securityChecks?.filter((check) =>
+    check?.blockMarkerRefNumber?.refNumber
+      ?.toLowerCase()
+      ?.includes(searchTerm.toLowerCase())
+  );
 
   const renderContent = () => {
     if (isLoading) {
@@ -33,15 +44,35 @@ const DashboardBlockInspection = () => {
 
     return (
       <>
-        <div className="mb-6 flex flex-wrap items-center gap-4">
-          <h4 className="text-gradient-brown font-bold">Block Inspections</h4>
-          <div className="text-sm text-gray-1 font-medium">
-            Total {securityChecks?.length || 0} Blocks
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <h4 className="text-gradient-brown font-bold">Block Inspections</h4>
+            <div className="text-sm text-gray-1 font-medium">
+              Total {filteredChecks?.length || 0} Blocks
+            </div>
           </div>
+
+          <Input
+            isClearable
+            placeholder="Search Reference Number"
+            startContent={<IconSearch size={18} />}
+            type="search"
+            variant="bordered"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            classNames={{
+              base: "max-w-80 shadow-none",
+              inputWrapper: "bg-white shadow-none",
+              input: "text-ellipsis",
+            }}
+          />
+
+          {/* filter */}
+          <Filter />
         </div>
 
         <div className="flex flex-wrap gap-6">
-          {securityChecks.map((securityCheck) => (
+          {filteredChecks?.map((securityCheck) => (
             <ThumbnailCard
               key={securityCheck._id}
               className="w-[calc(50%-1rem)] xl:w-[calc(33.33%-1rem)]"

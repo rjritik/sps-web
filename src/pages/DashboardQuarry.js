@@ -47,7 +47,7 @@ const DashboardQuarry = () => {
         <div className="pb-6 mb-6 border-b-1 border-neutral-200">
           <Input
             isClearable
-            placeholder="Search"
+            placeholder="Search Quarry Name"
             startContent={<IconSearch size={18} />}
             type="search"
             variant="bordered"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardLayout from "../components/Dashboard/DashboardLayout";
 import { Button, Card, CardBody, Image } from "@heroui/react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import IconEdit from "../utils/icons/IconEdit";
 import { useDispatch } from "react-redux";
 import { addBlock } from "../store/slices/quarries";
+import ConfirmationModal from "../components/Modal/ConfirmationModal";
 
 const breadcrumbItems = [
   { title: "On Going Quarries", link: "/quarry" },
@@ -16,6 +17,10 @@ const QuarryBlockDetails = () => {
   const { blockDetails, isPreview, isEdit } = useLocation().state || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const onOpen = () => setIsOpen(true);
+  const onOpenChange = (open) => setIsOpen(open);
 
   const {
     additionalDetails,
@@ -181,9 +186,9 @@ const QuarryBlockDetails = () => {
       </Card>
 
       {isPreview && (
-        <>
+        <div className="flex justify-center gap-x-4 mt-6">
           <Button
-            color="primary"
+            color="secondary"
             onPress={() => {
               navigate(`/quarry/add-update-blocks`, {
                 state: {
@@ -195,21 +200,34 @@ const QuarryBlockDetails = () => {
               });
             }}
           >
-            <IconEdit /> Edit
+            Edit Details
           </Button>
 
           <Button
             color="primary"
-            onPress={() => {
+            onPress={async () => {
               if (!isEdit) {
-                dispatch(addBlock(blockDetails));
+                const result = await dispatch(addBlock(blockDetails));
+                onOpen();
               }
-              navigate(`/quarry-details/${blockDetails?.quarryRefId}`);
             }}
           >
-            Save Block
+            Confirm and Proceed
           </Button>
-        </>
+        </div>
+      )}
+
+      {isOpen && (
+        <ConfirmationModal
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onOpenChange={onOpenChange}
+          title="Blocks Added Successfully!"
+          body="The Block has been added and saved"
+          action={() =>
+            navigate(`/quarry-details/${blockDetails?.quarryRefId}`)
+          }
+        />
       )}
     </DashboardLayout>
   );
