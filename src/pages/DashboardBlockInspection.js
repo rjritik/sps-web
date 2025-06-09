@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ContentCard from "../components/Card/ContentCard";
-import {
-  getsecurityChecks,
-  getSecurityChecks,
-} from "../store/slices/inspector/thunks";
+import { getSecurityChecks } from "../store/slices/inspector/thunks";
 import DashboardLayout from "../components/Dashboard/DashboardLayout";
 import ThumbnailCard from "../components/Card/ThumbnailCard";
 
@@ -13,8 +9,6 @@ const DashboardBlockInspection = () => {
   const { securityChecks, isLoading, error } = useSelector(
     (state) => state.inspector
   );
-
-  console.log("securityChecks = ", securityChecks);
 
   useEffect(() => {
     dispatch(getSecurityChecks());
@@ -55,7 +49,8 @@ const DashboardBlockInspection = () => {
                 refNumber: securityCheck?.blockMarkerRefNumber?.refNumber,
                 type: securityCheck?.blockMarkerRefNumber?.type,
                 dimensions: securityCheck?.blockMarkerRefNumber?.blockDimension,
-                additionalDetails: securityCheck?.additionalDetails,
+                additionalDetails:
+                  securityCheck?.blockMarkerRefNumber?.additionalDetails,
                 parentPage: "block-inspection",
               }}
             />
