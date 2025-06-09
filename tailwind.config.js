@@ -12,6 +12,8 @@ module.exports = {
                 body: ["Inter", "sans-serif"],
             },
             colors: {
+                primary: "#6A6A6A",
+
                 "brown-1": "#201309",
                 "brown-2": "#452D14",
                 "brown-light-1": "#FFF0E6",

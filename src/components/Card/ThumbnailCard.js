@@ -37,14 +37,14 @@ const ThumbnailCard = ({ className, data }) => {
     // Get the first image from attachments or use default
     const getImageUrl = () => {
         const attachmentUrl = additionalDetails?.attachments?.[0];
-        if (!attachmentUrl) return "/images/img-thumbnail.jpg";
+        if (!attachmentUrl) return "/images/img-placeholder.svg";
 
         // Check if URL starts with file://
         if (
             attachmentUrl.startsWith("file://") ||
             attachmentUrl.startsWith("https://example")
         ) {
-            return "/images/img-thumbnail.jpg";
+            return "/images/img-placeholder.svg";
         }
 
         return attachmentUrl;
@@ -82,16 +82,16 @@ const ThumbnailCard = ({ className, data }) => {
                     className ? className : ""
                 }`}
             >
-                <CardHeader className="flex gap-4 p-0">
+                <CardHeader className="flex gap-4 p-0 mb-4">
                     <Image
                         alt="block thumbnail"
                         src={getImageUrl()}
                         width={750}
                         height={562}
-                        className="mb-4 w-full max-w-full !h-auto aspect-video object-cover rounded-lg"
+                        className="w-full max-w-full !h-auto aspect-video object-cover rounded-lg"
                         onError={(e) => {
                             e.target.onerror = null; // Prevent infinite loop
-                            e.target.src = "/images/img-thumbnail.jpg"; // Fallback to default image
+                            e.target.src = "/images/img-placeholder.svg"; // Fallback to default image
                         }}
                     />
                 </CardHeader>
@@ -115,7 +115,11 @@ const ThumbnailCard = ({ className, data }) => {
                             <div className="flex flex-wrap justify-between gap-1 pt-3 px-4 mt-3 -mx-4 border-t-1 border-brown-light-1">
                                 <div>
                                     <span
-                                        className="tile-color inline-block mr-2 w-2.5 min-w-2.5 aspect-square rounded-full"
+                                        className={`tile-color inline-block mr-2 w-2.5 min-w-2.5 aspect-square rounded-full ${
+                                            color === "white"
+                                                ? "border border-neutral-400"
+                                                : ""
+                                        }`}
                                         style={getColorStyle()}
                                     ></span>
                                     Color - {color}
@@ -135,7 +139,7 @@ const ThumbnailCard = ({ className, data }) => {
                             <Link
                                 href=""
                                 size="sm"
-                                className="text-gray-1"
+                                className="text-gray-2 font-medium"
                                 onPress={() => {
                                     if (parentPage === "security-check") {
                                         navigate(
@@ -160,17 +164,21 @@ const ThumbnailCard = ({ className, data }) => {
                         </div>
                     ) : (
                         <>
-                            <div className="content-center px-4 w-1/2">
-                                <Link href="" size="sm" className="text-gray-1">
+                            <div className="content-center px-2 w-1/2">
+                                <Link
+                                    href=""
+                                    size="sm"
+                                    className="text-gray-2 font-medium"
+                                >
                                     Edit Details
                                 </Link>
                             </div>
                             <div className="bg-neutral-400 -ml-[1px] w-[1px]"></div>
-                            <div className="content-center px-4 w-1/2">
+                            <div className="content-center px-2 w-1/2">
                                 <Link
                                     href=""
                                     size="sm"
-                                    className="text-gray-1"
+                                    className="text-gray-2 font-medium"
                                     onPress={() => {
                                         navigate(`/quarry/block-details`, {
                                             state: { blockDetails: details },
