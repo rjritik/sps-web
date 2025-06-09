@@ -31,7 +31,6 @@ const breadcrumbItems = [
 const AddUpdateBlocks = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const blockMarkerRefNumber = location.state?.blockMarkerRefNumber || "";
   const quarryRefId = location.state?.quarryRefId || "";
 
@@ -158,8 +157,9 @@ const AddUpdateBlocks = () => {
         remarks: data.remarks,
       },
     };
-    dispatch(addBlock(payload));
-    navigate(`/quarry-details/${quarryRefId}`);
+    navigate(`/quarry/block-details`, {
+      state: { blockDetails: payload, isPreview: true },
+    });
   };
 
   return (

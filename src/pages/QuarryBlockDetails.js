@@ -17,8 +17,6 @@ const QuarryBlockDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log("blockDetails = ", blockDetails);
-
   const {
     additionalDetails,
     blockColor,
@@ -180,7 +178,7 @@ const QuarryBlockDetails = () => {
             color="primary"
             onPress={() => {
               dispatch(addBlock(blockDetails));
-              navigate(`/quarry-details/${refNumber}`);
+              navigate(`/quarry-details/${blockDetails?.quarryRefId}`);
             }}
           >
             Save Block
