@@ -1,0 +1,7 @@
+.slick-slider {
+    @apply overflow-hidden;
+
+    .slick-track {
+        @apply flex;
+    }
+}

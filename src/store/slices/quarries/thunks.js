@@ -5,6 +5,7 @@
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  createBlock,
   getQuarries as fetchQuarries,
   getQuarryByReferenceId as fetchQuarryByReferenceId,
 } from "../../../services/quarriesService";
@@ -55,6 +56,27 @@ export const getQuarryByReferenceId = createAsyncThunk(
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch quarry details"
       );
+    }
+  }
+);
+
+/**
+ * Add a new block to the quarry
+ * @param {Object} blockData - Data for the block to be created
+ * @returns {Object} - Newly created block data
+ */
+export const addBlock = createAsyncThunk(
+  "quarries/addBlock",
+  async (blockData, { rejectWithValue }) => {
+    try {
+      const response = await createBlock(blockData);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error creating block:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );

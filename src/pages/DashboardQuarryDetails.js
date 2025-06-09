@@ -55,6 +55,24 @@ const DashboardQuarryDetails = () => {
         );
     }
 
+    //     return (
+    //       <DashboardLayout>
+    //         <div className="flex items-center justify-center h-full">
+    //           <div className="text-gray-1">Loading...</div>
+    //         </div>
+    //       </DashboardLayout>
+    //     );
+    //   }
+    //   if (error) {
+    //     return (
+    //       <DashboardLayout>
+    //         <div className="flex items-center justify-center h-full">
+    //           <div className="text-red-500">{error}</div>
+    //         </div>
+    //       </DashboardLayout>
+    //     );
+    //   }
+
     return (
         <DashboardLayout>
             <div className="bg-white px-6 py-4 -mx-6 -mt-6 mb-6">
@@ -120,6 +138,7 @@ const DashboardQuarryDetails = () => {
                     onOpen={onOpen}
                     onOpenChange={onOpenChange}
                     title="Add New Block"
+                    quarryRefId={id}
                 />
             )}
         </DashboardLayout>

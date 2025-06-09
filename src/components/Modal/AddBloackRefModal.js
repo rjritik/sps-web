@@ -21,7 +21,7 @@ const schema = yup.object().shape({
     .required("Block Marker Reference Number is required"),
 });
 
-const AddBlockRefModal = ({ isOpen, onOpenChange, title }) => {
+const AddBlockRefModal = ({ isOpen, onOpenChange, title, quarryRefId }) => {
   const navigate = useNavigate();
   const {
     register,
@@ -38,7 +38,10 @@ const AddBlockRefModal = ({ isOpen, onOpenChange, title }) => {
     localStorage.removeItem("blockMarkerRefNumber");
     localStorage.setItem("blockMarkerRefNumber", data.blockMarkerRefNumber);
     navigate("/quarry/add-update-blocks", {
-      state: { blockMarkerRefNumber: data.blockMarkerRefNumber },
+      state: {
+        blockMarkerRefNumber: data.blockMarkerRefNumber,
+        quarryRefId: quarryRefId,
+      },
     });
     onOpenChange(false); // Close modal after saving
   };

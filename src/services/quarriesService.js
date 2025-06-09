@@ -33,3 +33,23 @@ export const getQuarryByReferenceId = async (referenceId) => {
     throw error;
   }
 };
+
+/**
+ * Create the block for any quarry
+ * @param {object} blockData - Payload for the block data
+ * @returns {Promise<Object>} Block details object
+ * @throws {Error} When adding the block quarry details fails
+ */
+export const createBlock = async (blockData) => {
+  try {
+    const response = await api.post(`/api/blocks`, blockData);
+    return response.data;
+  } catch (error) {
+    // It's good practice to log or re-throw the error for thunk to catch
+    console.error(
+      "Error creating block:",
+      error.response?.data || error.message
+    );
+    throw error; // Re-throw to be caught by Redux Thunk's rejected action
+  }
+};
