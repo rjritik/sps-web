@@ -159,7 +159,21 @@ const ThumbnailCard = ({ className, data }) => {
           ) : (
             <>
               <div className="content-center px-2 w-1/2">
-                <Link href="" size="sm" className="text-gray-2 font-medium">
+                <Link
+                  href=""
+                  size="sm"
+                  className="text-gray-2 font-medium"
+                  onPress={() => {
+                    navigate(`/quarry/add-update-blocks`, {
+                      state: {
+                        blockDetails: details,
+                        blockMarkerRefNumber: refNumber,
+                        quarryRefId: details?.quarryRefId,
+                        isEdit: true,
+                      },
+                    });
+                  }}
+                >
                   Edit Details
                 </Link>
               </div>

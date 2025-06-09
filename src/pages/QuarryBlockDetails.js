@@ -13,7 +13,7 @@ const breadcrumbItems = [
 ];
 
 const QuarryBlockDetails = () => {
-  const { blockDetails, isPreview } = useLocation().state || {};
+  const { blockDetails, isPreview, isEdit } = useLocation().state || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -51,7 +51,19 @@ const QuarryBlockDetails = () => {
           {isPreview ? "Preview Block" : "View Block Details"}
         </h4>
         {!isPreview && (
-          <Button color="primary">
+          <Button
+            color="primary"
+            onPress={() => {
+              navigate(`/quarry/add-update-blocks`, {
+                state: {
+                  blockDetails,
+                  blockMarkerRefNumber: refNumber,
+                  quarryRefId: blockDetails?.quarryRefId,
+                  isEdit: true,
+                },
+              });
+            }}
+          >
             <IconEdit /> Edit
           </Button>
         )}
@@ -170,14 +182,28 @@ const QuarryBlockDetails = () => {
 
       {isPreview && (
         <>
-          <Button color="primary">
+          <Button
+            color="primary"
+            onPress={() => {
+              navigate(`/quarry/add-update-blocks`, {
+                state: {
+                  blockDetails,
+                  blockMarkerRefNumber: refNumber,
+                  quarryRefId: blockDetails?.quarryRefId,
+                  isEdit: true,
+                },
+              });
+            }}
+          >
             <IconEdit /> Edit
           </Button>
 
           <Button
             color="primary"
             onPress={() => {
-              dispatch(addBlock(blockDetails));
+              if (!isEdit) {
+                dispatch(addBlock(blockDetails));
+              }
               navigate(`/quarry-details/${blockDetails?.quarryRefId}`);
             }}
           >

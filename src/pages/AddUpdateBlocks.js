@@ -22,6 +22,7 @@ import IconUpload from "../utils/icons/IconUpload";
 import IconMic from "../utils/icons/IconMic";
 import IconCamera from "../utils/icons/IconCamera";
 import IconClose from "../utils/icons/IconClose";
+import { parseDate, getLocalTimeZone } from "@internationalized/date";
 
 const breadcrumbItems = [
   { title: "On Going Quarries", link: "/quarry" },
@@ -31,8 +32,10 @@ const breadcrumbItems = [
 const AddUpdateBlocks = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const blockMarkerRefNumber = location.state?.blockMarkerRefNumber || "";
-  const quarryRefId = location.state?.quarryRefId || "";
+  const { blockMarkerRefNumber, quarryRefId, blockDetails, isEdit } =
+    location.state || {};
+
+  console.log({ blockDetails });
 
   const {
     register,
@@ -40,6 +43,7 @@ const AddUpdateBlocks = () => {
     control,
     formState: { errors },
     trigger,
+    reset,
   } = useForm({
     defaultValues: {
       blockType: "",
@@ -67,6 +71,7 @@ const AddUpdateBlocks = () => {
     isUploading,
     uploadError,
     removeAttachment,
+    setAttachments,
   } = useFileUpload(5);
 
   useEffect(() => {
@@ -74,6 +79,44 @@ const AddUpdateBlocks = () => {
       navigate("/quarry");
     }
   }, []);
+
+  useEffect(() => {
+    if (blockDetails) {
+      const qualityGrade =
+        blockDetails.blockQualityGrade === "Premium" ? "Premium" : "Commercial";
+
+      // Parse the date string to a Date object
+      let parsedDate = null;
+      const isoDate = new Date(blockDetails.dateTime)
+        .toISOString()
+        .split("T")[0]; // "YYYY-MM-DD"
+      parsedDate = parseDate(isoDate); // Convert to expected format
+
+      reset({
+        blockType: blockDetails.type,
+        blockQualityGrade: qualityGrade,
+        blockColor: blockDetails.blockColor,
+        date: parsedDate,
+        blockLength: blockDetails.blockDimension?.blockLength?.toString() || "",
+        blockWidth: blockDetails.blockDimension?.blockWidth?.toString() || "",
+        blockWeight: blockDetails.blockDimension?.blockWeight?.toString() || "",
+        blockHeight: blockDetails.blockDimension?.blockHeight?.toString() || "",
+        blockVolume: blockDetails.blockDimension?.blockVolume?.toString() || "",
+        purchasingUnit: blockDetails.additionalDetails?.purchasingUnit || "",
+        truckNumber: blockDetails.additionalDetails?.truckNumber || "",
+        invoiceNumber: blockDetails.additionalDetails?.invoiceNumber || "",
+        wrappingRequired: blockDetails.additionalDetails?.wrappingRequired
+          ? "yes"
+          : "no",
+        remarks: blockDetails.additionalDetails?.remarks || "",
+      });
+
+      // Set attachments if they exist in edit mode
+      if (isEdit && blockDetails.additionalDetails?.attachments?.length > 0) {
+        setAttachments(blockDetails.additionalDetails.attachments);
+      }
+    }
+  }, [blockDetails, reset, isEdit, setAttachments]);
 
   const handleFileChange = async (e) => {
     const files = Array.from(e.target.files);
@@ -158,7 +201,7 @@ const AddUpdateBlocks = () => {
       },
     };
     navigate(`/quarry/block-details`, {
-      state: { blockDetails: payload, isPreview: true },
+      state: { blockDetails: payload, isPreview: true, isEdit },
     });
   };
 
@@ -297,7 +340,7 @@ const AddUpdateBlocks = () => {
                       variant="bordered"
                       className="w-full"
                       value={field.value}
-                      onChange={field.onChange}
+                      onChange={(val) => field.onChange(val)}
                     />
                   )}
                 />
@@ -544,7 +587,7 @@ const AddUpdateBlocks = () => {
                   className="w-full"
                   placeholder="Write your remark here"
                   {...register("remarks", {
-                    required: "Remarks are required",
+                    // required: "Remarks are required",
                   })}
                 />
                 {errors.remarks && (
