@@ -35,7 +35,7 @@ const AddUpdateBlocks = () => {
   const { blockMarkerRefNumber, quarryRefId, blockDetails, isEdit } =
     location.state || {};
 
-  console.log({ blockDetails });
+  console.log({ isEdit });
 
   const {
     register,
