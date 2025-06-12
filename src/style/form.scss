@@ -1,6 +1,11 @@
 .form-label {
-    @apply text-sm font-medium;
-    @apply text-gray-2 !important;
+    @apply font-medium;
+    @apply text-sm text-gray-2 !important;
+
+    .required {
+        // @apply text-red-500;
+        @apply text-danger;
+    }
 }
 
 .group {
@@ -12,6 +17,28 @@
 
         [data-slot="input-wrapper"] {
             @apply shadow-none;
+        }
+    }
+}
+
+.checkbox-sides {
+    .wrapper {
+        @apply gap-3;
+
+        label {
+            @apply bg-white text-sm px-4 py-1.5 m-0 border border-neutral-500 rounded-md;
+
+            span {
+                font-size: inherit;
+
+                &:first-of-type {
+                    @apply hidden;
+                }
+            }
+
+            &[data-selected="true"] {
+                @apply bg-brown-light-1 border-brown-light-2;
+            }
         }
     }
 }
